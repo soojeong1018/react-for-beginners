@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <div id="root"></div>
+    <!--<span>Total clicks : 0</span>
+    <button id="btn">Click me</button>-->
+
+</body>
+<script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+<script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+<script src="https://unpkg.com/prop-types@15.7.2/prop-types.js"></script>
+
+<script type="text/babel">
+
+    function Btn({btnName, onClick, fontSize = 10}) {
+        console.log(`${btnName} was render`);
+        return (
+            <button
+                onClick={onClick}
+                style={{
+                    backgroundColor: "tomato",
+                    color: "white",
+                    padding: "10px 20px",
+                    border: 0,
+                    borderRadius: 10,
+                    fontSize
+                }}>{btnName}</button>
+        );
+    }
+
+    Btn.propTypes = {
+        btnName: PropTypes.string.isRequired,
+        fontSize: PropTypes.number,
+    }
+    const MemorizedBtn = React.memo(Btn);
+    const App = () => {
+        const [value, setValue] = React.useState("Save Changes");
+        const changeValue = () => setValue("Revert Changes");
+
+        return (
+            <div>
+                <Btn fontSize={18} btnName={value} onClick={changeValue}/>
+                <Btn btnName="Continue " />
+            </div>
+        );
+    }
+
+
+    const root = document.getElementById('root');
+    ReactDOM.render(<App/>, root);
+</script>
+</html>
